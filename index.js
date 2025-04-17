@@ -8,8 +8,8 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// MongoDB connection URI with TLS enabled
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ieavp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&tls=true`;
+// MongoDB connection URI without explicitly specifying tls=true
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ieavp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
     serverApi: {
@@ -17,8 +17,8 @@ const client = new MongoClient(uri, {
         strict: true,
         deprecationErrors: true,
     },
-    tls: true, // Ensuring TLS is enabled
     useUnifiedTopology: true, // Use latest topology engine
+    ssl: true, // Ensure SSL is enabled for MongoDB Atlas connection
 });
 
 // Middleware
